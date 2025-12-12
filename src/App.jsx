@@ -1,9 +1,10 @@
 import "./App.css";
+import { EmployeeGrid } from "./components/EmployeeGrid";
 
 function App() {
   return (
     <>
-      <span className="bg-red-500">Hello</span>
+      <EmployeeGrid />
     </>
   );
 }
