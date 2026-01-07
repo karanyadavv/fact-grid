@@ -8,9 +8,11 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 import { AgGridReact } from "ag-grid-react";
 import data from "../data/employees.json";
 import { getColumnDefs } from "../config/columnDefs";
+import "../App.css";
 
 export const EmployeeGrid = () => {
   const [rowData, setRowData] = useState(data.employees);
+  const [highlightTop, setHighlightTop] = useState(false);
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
@@ -29,11 +31,24 @@ export const EmployeeGrid = () => {
   }, []);
   const columnDefs = useMemo(() => getColumnDefs(), []);
 
+  const rowClassRules = useMemo(
+    () => ({
+      green: (params) => highlightTop && params.data?.performanceRating >= 4.5,
+    }),
+    [highlightTop]
+  );
+
   return (
     <div className="flex flex-col items-center justify-center pt-10 font-primary">
       <h1 className="text-3xl font-medium tracking-tight text-gray-950">
         Employee Grid
       </h1>
+      <button
+        className="bg-gray-500 text-amber-50 p-2 rounded-md cursor-pointer mt-4 text-shadow-gray-900"
+        onClick={() => setHighlightTop((prev) => !prev)}
+      >
+        Higlight top performers
+      </button>
       <div
         className="ag-theme-alpine"
         style={{ height: 680, marginTop: 40, width: "80%" }}
@@ -47,6 +62,7 @@ export const EmployeeGrid = () => {
           animateRows={true}
           pagination={true}
           paginationPageSize={10}
+          rowClassRules={rowClassRules}
         />
       </div>
       <div className="mt-8 text-center text-sm text-gray-700">
@@ -58,3 +74,5 @@ export const EmployeeGrid = () => {
     </div>
   );
 };
+
+// button clicked we highlight entire row =< 4.5 in green

@@ -78,7 +78,7 @@ export const getColumnDefs = () => [
     field: "performanceRating",
     headerName: "Performance",
     cellRenderer: RatingCellRenderer,
-    filter: "agNumberColumnFilter",
+    // filter: "agNumberColumnFilter",
     width: 180,
   },
   {
